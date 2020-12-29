@@ -10,6 +10,7 @@ for(const file of commandFiles){
     client.commands.set(command.name,command);
 }
 client.once('ready',()=>{
+    client.user.setActivity(';인증', { type: 'PLAYING' });
     console.log("Ready");
     RobloxModule.login(rbx_cookie)
 });
