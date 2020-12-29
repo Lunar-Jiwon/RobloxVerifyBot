@@ -24,7 +24,10 @@ module.exports.CheckUserGroup = function(message,robloxuserid){
             }
         }
         roblox.getRankInGroup(serverdatas[message.guild.id].DefaultGroup,robloxuserid).then((rank)=>{
+            if(rank === 0) return message.channel.send(embed.SuccessfulEmbed("인증 완료","그룹 가입 후 인증해주세요"));
+            
             message.member.roles.add(serverdatas[message.guild.id].DefaultRole)
+
             for(var i = 0; i < Object.keys(serverdatas[message.guild.id].Ranks).length; i++){
                 var theTypeIs = Object.keys(serverdatas[message.guild.id].Ranks)[i];
                 
@@ -55,9 +58,9 @@ module.exports.CheckUserGroup = function(message,robloxuserid){
                                 
                             }
                         }
-                        
-                        var name = rankname.substring(rankname.indexOf("["),rankname.lastIndexOf("]")+1);
-                        roblox.getUsernameFromId(robloxuserid).then((username)=>{
+                        console.log(rankname)
+                            var name = rankname.substring(rankname.indexOf("["),rankname.lastIndexOf("]")+1);
+                            roblox.getUsernameFromId(robloxuserid).then((username)=>{
                             message.member.setNickname(`${name} ${username}`)
                             return message.channel.send(embed.SuccessfulEmbed("인증 완료","성공적으로 인증이 완료되었습니다.\n역할 지급은 여러번 인증 시 딜레이가 발생할 수 있습니다."));
                         })
