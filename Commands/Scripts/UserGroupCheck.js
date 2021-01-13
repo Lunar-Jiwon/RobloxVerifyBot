@@ -36,53 +36,51 @@ module.exports.CheckUserGroup = function(message,robloxuserid){
                     for(const role of rolename){
                         message.member.roles.add(role)
                     }
-                    
-                    roblox.getRankNameInGroup(serverdatas[message.guild.id].DefaultGroup,robloxuserid).then((rankname)=>{
+                }
+            }
+            roblox.getRankNameInGroup(serverdatas[message.guild.id].DefaultGroup,robloxuserid).then((rankname)=>{
                         
-                        if(serverdatas[message.guild.id].SubGroup != null){
-                            for(var x = 0; x < Object.keys(serverdatas[message.guild.id].SubGroup).length; x++){
-                                run()
-                                async function run(){
-                                    var rs = Object.keys(serverdatas[message.guild.id].SubGroup)[x];
-                                    await roblox.getRankNameInGroup(rs,robloxuserid).then((rank1)=>{
-                                        if(rank1 == "Guest") return isjoin = false
-                                        ifjoin = true
-                                        var name = rankname.substring(rankname.indexOf("["),rankname.lastIndexOf("]")+1);
-                                            roblox.getUsernameFromId(robloxuserid).then((username)=>{
-                                                message.member.setNickname(`${name} (${serverdatas[message.guild.id].SubGroup[rs].Nickname}) ${username}`)
-                                                message.member.roles.add(serverdatas[message.guild.id].SubGroup[rs].RoleId)
-                                                message.channel.send(embed.SuccessfulEmbed("인증 완료","성공적으로 인증이 완료되었습니다.\n역할 지급은 여러번 인증 시 딜레이가 발생할 수 있습니다."));
-                                            })
-                                        return
+                if(serverdatas[message.guild.id].SubGroup != null){
+                    for(var x = 0; x < Object.keys(serverdatas[message.guild.id].SubGroup).length; x++){
+                        run()
+                        async function run(){
+                            var rs = Object.keys(serverdatas[message.guild.id].SubGroup)[x];
+                            await roblox.getRankNameInGroup(rs,robloxuserid).then((rank1)=>{
+                                if(rank1 == "Guest") return isjoin = false
+                                ifjoin = true
+                                var name = rankname.substring(rankname.indexOf("["),rankname.lastIndexOf("]")+1);
+                                    roblox.getUsernameFromId(robloxuserid).then((username)=>{
+                                        message.member.setNickname(`${name} (${serverdatas[message.guild.id].SubGroup[rs].Nickname}) ${username}`)
+                                        message.member.roles.add(serverdatas[message.guild.id].SubGroup[rs].RoleId)
+                                        message.channel.send(embed.SuccessfulEmbed("인증 완료","성공적으로 인증이 완료되었습니다.\n역할 지급은 여러번 인증 시 딜레이가 발생할 수 있습니다."));
                                     })
-                                }
-                                
-                                
-                            }
-                            if (!isjoin && isjoin != null){
-                                roblox.getRankNameInGroup(serverdatas[message.guild.id].DefaultGroup,robloxuserid).then((rankname)=>{
-                                        var name = rankname.substring(rankname.indexOf("["),rankname.lastIndexOf("]")+1);
-                                        roblox.getUsernameFromId(robloxuserid).then((username)=>{
-                                            message.member.setNickname(`${name} ${username}`)
-                                            return message.channel.send(embed.SuccessfulEmbed("인증 완료","성공적으로 인증이 완료되었습니다.\n역할 지급은 여러번 인증 시 딜레이가 발생할 수 있습니다."));
-                                        })
-                                })
-                            }
-                            
-                            
-                        }else{
-                            var name = rankname.substring(rankname.indexOf("["),rankname.lastIndexOf("]")+1);
-                            roblox.getUsernameFromId(robloxuserid).then((username)=>{
-                                message.member.setNickname(`${name} ${username}`)
-                                return message.channel.send(embed.SuccessfulEmbed("인증 완료","성공적으로 인증이 완료되었습니다.\n역할 지급은 여러번 인증 시 딜레이가 발생할 수 있습니다."));
+                                return
                             })
                         }
                         
                         
+                    }
+                    if (!isjoin && isjoin != null){
+                        roblox.getRankNameInGroup(serverdatas[message.guild.id].DefaultGroup,robloxuserid).then((rankname)=>{
+                                var name = rankname.substring(rankname.indexOf("["),rankname.lastIndexOf("]")+1);
+                                roblox.getUsernameFromId(robloxuserid).then((username)=>{
+                                    message.member.setNickname(`${name} ${username}`)
+                                    return message.channel.send(embed.SuccessfulEmbed("인증 완료","성공적으로 인증이 완료되었습니다.\n역할 지급은 여러번 인증 시 딜레이가 발생할 수 있습니다."));
+                                })
+                        })
+                    }
+                    
+                    
+                }else{
+                    var name = rankname.substring(rankname.indexOf("["),rankname.lastIndexOf("]")+1);
+                    roblox.getUsernameFromId(robloxuserid).then((username)=>{
+                        message.member.setNickname(`${name} ${username}`)
+                        return message.channel.send(embed.SuccessfulEmbed("인증 완료","성공적으로 인증이 완료되었습니다.\n역할 지급은 여러번 인증 시 딜레이가 발생할 수 있습니다."));
                     })
-                
                 }
-            }
+                
+                
+            })
         }).catch((error)=>{
             message.delete();
             message.channel.send(embed.ErrorEmbed("인증",`오류 : ${error}`))
