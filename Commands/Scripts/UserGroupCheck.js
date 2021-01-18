@@ -1,9 +1,9 @@
 const roblox = require('noblox.js');
 const fs = require('fs');
 const embed = require('../module/DiscordModule');
-var isjoin = null
 module.exports.CheckUserGroup = function(message,robloxuserid){
-    try{
+    var isjoin = null
+    try {
         const data = fs.readFileSync('./Data/ServerData.json','utf8');
         const serverdatas = JSON.parse(data)
         if(serverdatas[message.guild.id].SubGroup != null){
@@ -52,15 +52,13 @@ module.exports.CheckUserGroup = function(message,robloxuserid){
                                     roblox.getUsernameFromId(robloxuserid).then((username)=>{
                                         message.member.setNickname(`${name} (${serverdatas[message.guild.id].SubGroup[rs].Nickname}) ${username}`)
                                         message.member.roles.add(serverdatas[message.guild.id].SubGroup[rs].RoleId)
-                                        message.channel.send(embed.SuccessfulEmbed("인증 완료","성공적으로 인증이 완료되었습니다.\n역할 지급은 여러번 인증 시 딜레이가 발생할 수 있습니다."));
+                                        return message.channel.send(embed.SuccessfulEmbed("인증 완료", "성공적으로 인증이 완료되었습니다.\n역할 지급은 여러번 인증 시 딜레이가 발생할 수 있습니다."));
                                     })
-                                return
                             })
                         }
-                        
-                        
                     }
                     if (!isjoin && isjoin != null){
+                        console.log("asdf")
                         roblox.getRankNameInGroup(serverdatas[message.guild.id].DefaultGroup,robloxuserid).then((rankname)=>{
                                 var name = rankname.substring(rankname.indexOf("["),rankname.lastIndexOf("]")+1);
                                 roblox.getUsernameFromId(robloxuserid).then((username)=>{
