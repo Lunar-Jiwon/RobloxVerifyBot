@@ -3,7 +3,7 @@
 
 **(본 프로젝트는 종료된 프로젝트입니다)**
 
-## 사용 된 API
+## 사용 된 Frameworks
 Discord.js, Noblox.js
 
 ## 사용 방법
